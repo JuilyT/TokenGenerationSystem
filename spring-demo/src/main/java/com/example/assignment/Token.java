@@ -23,6 +23,9 @@ public class Token {
 	private int priority;
 	@Column
 	private Timestamp lastUpdated;
+	public Token(int priority) {
+		this.priority = priority;
+	}
 	public Token(int id, int priority) {
 		this.id=id;
 		this.priority = priority;

@@ -11,19 +11,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Counter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column
 	private ServiceType serviceType;
 	@Transient
 	private List<Token> tokens;
+	public Counter(){super();};
 	public Counter(int id, ServiceType type) {
 		this.id=id;
+		this.serviceType=type;
+	}
+	public Counter(ServiceType type) {
 		this.serviceType=type;
 	}
 	public int getId() {
@@ -38,25 +43,11 @@ public class Counter {
 	public void setServiceType(ServiceType serviceType) {
 		this.serviceType = serviceType;
 	}
-	/*public List<Customer> getCustomers() {
-		return customers;
-	}
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}*/
 	
 	@Override
 	public String toString() {
 		return "Counter [id=" + id + ", serviceType=" + serviceType + "]";
 	}
-	
-	/*public List<Token> getTokens() {
-		List<Token> tokens = new ArrayList<>();
-		for (Customer customer : safe(customers)) {
-			tokens.add(customer.getToken());
-		}
-		return tokens;
-	}*/
 	
 	public List<Token> getTokens() {
 		return tokens;
@@ -65,7 +56,17 @@ public class Counter {
 		this.tokens = tokens;
 	}
 	//It can be put in Utility class and make generic method
-	public static List<Customer> safe( List<Customer> other ) {
+	public static List<Token> safe( List<Token> other ) {
 	    return other == null ? Collections.emptyList() : other;
+	}
+	
+	public int getRank() {
+		int minIndex = tokens.size();
+		for (Token token : safe(tokens)) {
+			if (token.getPriority() == AccountType.REGULAR.getCode()) {
+				return tokens.indexOf(token);
+			}
+		}
+		return minIndex;
 	}
 }

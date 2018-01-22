@@ -15,24 +15,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Customer implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-	public enum AccountType{premium,regular};
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	@Column
 	private String accountNo;
 	@Column
 	private String name;
 	@Column
 	private String address;
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(length=15)
 	private AccountType accountType;
@@ -49,6 +46,12 @@ public class Customer implements Serializable{
 		this.services = services;
 	}
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getAccountNo() {
 		return accountNo;
 	}

@@ -1,4 +1,4 @@
-package com.example.assignment;
+package com.example.assignment.enums;
 
 public enum AccountType {
 	PREMIUM(1),

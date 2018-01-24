@@ -1,4 +1,4 @@
-package com.example.assignment;
+package com.example.assignment.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,10 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.example.assignment.enums.AccountType;
+import com.example.assignment.enums.ServiceType;
 
 @Entity
 public class Customer implements Serializable{

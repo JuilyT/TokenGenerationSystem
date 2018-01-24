@@ -1,9 +1,8 @@
-package com.example.assignment;
+package com.example.assignment.model;
 
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import org.slf4j.Logger;
+import org.springframework.beans.factory.support.GenericTypeAwareAutowireCandidateResolver;
+import org.springframework.util.CollectionUtils;
+
+import com.example.assignment.TokenGenerator;
+import com.example.assignment.enums.AccountType;
+import com.example.assignment.enums.ServiceType;
+import com.example.assignment.enums.Status;
 
 @Entity
 public class Counter {
@@ -23,6 +31,7 @@ public class Counter {
 	private ServiceType serviceType;
 	@Transient
 	private List<Token> tokens;
+	
 	public Counter(){super();};
 	public Counter(int id, ServiceType type) {
 		this.id=id;
@@ -60,13 +69,7 @@ public class Counter {
 	    return other == null ? Collections.emptyList() : other;
 	}
 	
-	public int getRank() {
-		int minIndex = tokens.size();
-		for (Token token : safe(tokens)) {
-			if (token.getPriority() == AccountType.REGULAR.getCode()) {
-				return tokens.indexOf(token);
-			}
-		}
-		return minIndex;
+	public Token getActiveToken() {
+		return getTokens().get(0);
 	}
 }

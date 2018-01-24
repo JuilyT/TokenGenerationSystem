@@ -1,4 +1,4 @@
-package com.example.assignment;
+package com.example.assignment.model;
 
 import java.sql.Timestamp;
 
@@ -9,6 +9,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
+
+import com.example.assignment.enums.Status;
 
 @Entity
 public class Token {
@@ -23,11 +28,16 @@ public class Token {
 	private int priority;
 	@Column
 	private Timestamp lastUpdated;
+	@Transient
+	private Counter counter;
+	@Transient
+	Customer customer;
+	
 	public Token(int priority) {
 		this.priority = priority;
 	}
-	public Token(int id, int priority) {
-		this.id=id;
+	public Token(Customer cust, int priority) {
+		this.customer = cust;
 		this.priority = priority;
 	}
 	
@@ -54,5 +64,18 @@ public class Token {
 	}
 	public void setLastUpdated(Timestamp lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+	public Counter getCounter() {
+		return counter;
+	}
+	public void setCounter(Counter counter) {
+		this.counter = counter;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 }

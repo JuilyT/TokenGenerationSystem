@@ -1,4 +1,4 @@
-package com.example.assignment;
+package com.example.assignment.enums;
 
 public enum ServiceType {
 	ACCOUNT_CREATION("account_creation"),
